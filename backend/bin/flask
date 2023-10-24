@@ -1,4 +1,4 @@
-#!/Users/nicho/Documents/GitHub/EcoSmart_Home_Hub/backend/bin/Python
+#!/Users/nicho/Documents/GitHub/EcoSmart_Home_Hub/backend/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
