@@ -3,13 +3,14 @@ import uuid
 
 @dataclass
 class Light:
-    def __init__(self, id: int, name: str, state: LightState, brightness: float, color: str):
+    def __init__(self, id: int, name: str, state: LightState, brightness: float, color: str, ledPinNum: int):
         self.id = id
         self.lightIdentifier = str(uuid.uuid4())
         self.name = name
         self.state = state
         self.brightness = brightness
         self.color = color
+        self.led = LED(ledPinNum)
 
     def get_light_identifier(self):
         return self.lightIdentifier
