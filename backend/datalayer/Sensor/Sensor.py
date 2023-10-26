@@ -1,7 +1,7 @@
-from dataclasses import dataclass
+import SensorType
 import uuid
 
-@dataclass
+
 class Sensor:
     def __init__(self, id:int, name: str, type: SensorType, value: float):
         self.id = id
