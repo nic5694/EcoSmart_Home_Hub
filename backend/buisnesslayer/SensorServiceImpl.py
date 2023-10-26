@@ -1,6 +1,6 @@
-from buisnesslaye.SensorService.SensorService import SensorService
-from datalayer.Sensor.Sensor import Sensor
-from datalayer.Sensor.SensorType import SensorType
+from .SensorService import SensorService
+from datalayer.Sensor import Sensor
+from datalayer.SensorType import SensorType
 
 
 class SensorServiceImpl(SensorService):

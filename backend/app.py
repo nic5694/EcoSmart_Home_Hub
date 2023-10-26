@@ -1,11 +1,8 @@
-import json
-
-from flask import Flask, jsonify, make_response
-from buisnesslaye.LightService import LightServiceImpl
-from datalayer.Light.Light import Light
+from flask import Flask
+from buisnesslayer.LightServiceImpl import LightServiceImpl
 import jsonpickle
 
-lightService = LightServiceImpl.LightServiceImpl()
+lightService = LightServiceImpl()
 
 app = Flask(__name__)
 
@@ -16,8 +13,13 @@ def get_lights():
     # light = lightService.getOneLight()
     # print(jsonify(lightService.led1))
     # print(lightService.to_json(lightService.led1))
-    print(jsonpickle.encode(lightService.led2))
-    return "Hello"
+    resp = {
+        'light1': jsonpickle.encode(lightService.led1),
+        'light2': jsonpickle.encode(lightService.led2),
+        'light3': jsonpickle.encode(lightService.led3)
+    }
+   # print(jsonpickle.encode(lightService.led2))
+    return resp
     # Convert each Light object to its __dict__
  #   light_data = [light.__dict__ for light in lights]
     #return lightService.to_json(light)

@@ -9,3 +9,6 @@ class Sensor:
         self.name = name
         self.type = type
         self.value = value
+
+    def get_sensor_identifier(self):
+        pass

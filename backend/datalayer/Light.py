@@ -1,6 +1,6 @@
 from .LightState import LightState
 import uuid
-#from gpiozero import LED, Button
+from gpiozero import LED, Button
 
 
 class Light:
@@ -11,7 +11,7 @@ class Light:
         self.state = state
         self.brightness = brightness
         self.color = color
-#        self.led = LED(ledPinNum)
+        self.led = LED(ledPinNum)
 
     def get_light_identifier(self):
         return self.lightIdentifier
@@ -42,6 +42,18 @@ class Light:
 
     def set_color(self, color):
         self.color = color
+
+    def get_led(self):
+        return self.led
+    """"
+    def toggle_Light(self):
+        if self.state == LightState.ON:
+            self.state = LightState.OFF
+            self.led.off()
+        else:
+            self.state = LightState.ON
+            self.led.on()
+            """
 
 # from .LightState import LightState  # Import your LightState class here
 # import uuid

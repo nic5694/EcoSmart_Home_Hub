@@ -1,4 +1,4 @@
-from buisnesslaye.LightService.LightService import LightService
+from .LightService import LightService
 from datalayer.Light import Light, LightState
 import json
 
@@ -6,9 +6,9 @@ import json
 class LightServiceImpl(LightService):
 
     def __init__(self):
-        self.led1 = Light.Light(1, "Kitchen", LightState.LightState.OFF, 0.0, "white", 6)
-        self.led2 = Light.Light(2, "Living Room", LightState.LightState.OFF, 0.0, "white", 7)
-        self.led3 = Light.Light(3, "Bedroom", LightState.LightState.OFF, 0.0, "white", 8)
+        self.led1 = Light(1, "Kitchen", LightState.OFF, 0.0, "white", 6)
+        self.led2 = Light(2, "Living Room", LightState.OFF, 0.0, "white", 7)
+        self.led3 = Light(3, "Bedroom", LightState.OFF, 0.0, "white", 8)
 
         # Create a dictionary to store the lights
         self.Lights = {
