@@ -3,11 +3,14 @@ import './App.css';
 
 function App() {
   return (
-   <div>
-    <h1>
-      EcoSmart Home Hub 
-    </h1>
-   </div>
+  
+      <body>
+      <div class="circle circle1"></div>
+      <div class="circle circle2"></div>
+      <div class="circle circle3"></div>
+      
+      </body>
+  
   );
 }
 
