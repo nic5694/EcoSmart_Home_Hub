@@ -1,16 +1,13 @@
-import logo from './y.png';
 import './App.css';
+import EcoSmartTitleComponent from './components/EcoSmartTitleComponent';
 
 function App() {
   return (
-  
-      <body>
-      <div class="circle circle1"></div>
-      <div class="circle circle2"></div>
-      <div class="circle circle3"></div>
-      
-      </body>
-  
+    <div class="pageContainer">
+      <div class="dashboardContainer">
+        <EcoSmartTitleComponent></EcoSmartTitleComponent>
+      </div>
+    </div>
   );
 }
 
