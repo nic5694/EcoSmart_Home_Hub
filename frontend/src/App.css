@@ -1,10 +1,17 @@
-.pageContainer {
+.bgImage {
     height: 100vh;
     width: 100vw;
+    position: absolute;
     background-image: url(./EcoSmart_BG.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    filter: blur(0px);
+    filter: blur(3px);
+    filter: contrast(80%);
+}
+
+.container{
+    height: 100vh;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,4 +41,77 @@
 .ecoSmartHomeHub{
     font-weight: lighter;
     font-size: 12.5px;
+}
+
+.ledLightPanelContainer{
+    height: 145px;
+    width: 145px;
+    color: white;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.15) 100%);
+    box-shadow: -1px -1px 2px 0px #FFF, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(20px);
+    transition: all .3s ease-in-out;
+}
+
+.ledLightPanelContainer.clicked{
+    cursor: pointer;
+    transform: scale(0.93);
+}
+
+.dashboard{
+    margin-top: 15px;
+    display: flex;
+}
+
+.leftSideContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.rightSide{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.TimeAndHumidityContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.TimePanelContainer{
+    height: 145px;
+    width: 312px;
+    color: white;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.15) 100%);
+    box-shadow: -1px -1px 2px 0px #FFF, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(20px);
+}
+
+.HumidityPanelContainer{
+    height: 145px;
+    width: 312px;
+    color: white;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.15) 100%);
+    box-shadow: -1px -1px 2px 0px #FFF, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(20px);
+}
+
+.tempContainer{
+    margin-top: 15px;
+}
+
+.TemperaturePanelContainer{
+    height: 303px;
+    width: 640px;
+    color: white;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.15) 100%);
+    box-shadow: -1px -1px 2px 0px #FFF, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(20px);
 }
