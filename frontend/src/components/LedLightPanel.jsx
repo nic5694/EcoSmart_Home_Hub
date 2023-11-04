@@ -12,7 +12,7 @@ function LedLightPanel(props) {
     setTimeout(() => {
       setClicked(false);
       setLightActive(!lightActive); // Remove the "clicked" class after a delay
-      if(lightActive){
+      if(!lightActive){
         setSliderValue(0)
       }
     }, 200);
