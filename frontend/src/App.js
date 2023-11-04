@@ -4,6 +4,7 @@ import LedLightPanel from './components/LedLightPanel';
 import TimePanel from './components/TimePanel';
 import HumidityPanel from './components/HumidityPanel';
 import TemperaturePanel from './components/TemperaturePanel';
+import FanPanel from './components/FanPanel';
 
 function App() {
   return (
@@ -17,9 +18,9 @@ function App() {
 
             <div class="leftSideContainer">
 
-              <div><LedLightPanel></LedLightPanel></div>
-              <div><LedLightPanel></LedLightPanel></div>
-              <div><LedLightPanel></LedLightPanel></div>
+              <div><LedLightPanel number="1" sliderId="slider1"></LedLightPanel></div>
+              <div><LedLightPanel number="2" sliderId="slider2"></LedLightPanel></div>
+              <div><FanPanel></FanPanel></div>
 
             </div>
 

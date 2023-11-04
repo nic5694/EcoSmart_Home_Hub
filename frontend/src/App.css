@@ -59,6 +59,22 @@
     transform: scale(0.93);
 }
 
+.fanPanelContainer{
+    height: 145px;
+    width: 145px;
+    color: white;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.15) 100%);
+    box-shadow: -1px -1px 2px 0px #FFF, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(20px);
+    transition: all .3s ease-in-out;
+}
+
+.fanPanelContainer.clicked{
+    cursor: pointer;
+    transform: scale(0.93);
+}
+
 .dashboard{
     margin-top: 15px;
     display: flex;
@@ -114,4 +130,85 @@
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.15) 100%);
     box-shadow: -1px -1px 2px 0px #FFF, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(20px);
+}
+
+
+.lightIconAndActiveContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 15px 0px 15px;
+    /*align-items: center;*/
+}
+
+.fanLabelAndActiveContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.3);
+    font-weight: 500;
+}
+
+.onOrOffContainer{
+    color: rgba(0, 0, 0, 0.3);
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.FanIconContainer{
+    display: flex;
+    justify-content: center;
+    /*background-color: aqua;*/
+}
+
+.FanAnimation{
+    animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+      transform: rotate(0deg); /* Start from 0 degrees */
+    }
+    to {
+      transform: rotate(360deg); /* Rotate to 360 degrees (full circle) */
+    }
+}
+
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width:80%; /* Full-width */
+    height: 2px; /* Specified height */
+    background: #00000030; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    border-radius: 50px;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+-webkit-appearance: none; /* Override default look */
+appearance: none;
+width: 15px; /* Set a specific slider handle width */
+height:15px; /* Slider handle height */
+background: white; /* Green background */
+cursor: pointer; /* Cursor on hover */
+border-radius: 50px;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.lightLabelAndPercentageContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 15px;
 }
