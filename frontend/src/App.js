@@ -9,7 +9,7 @@ import FanPanel from './components/FanPanel';
 function App() {
   return (
     <>
-      <div class="bgImage"></div>
+      <div class="bgImage" style={{filter: "blur(3px)"}}></div>
       <div class="container">
         <div class="dashboardContainer">
           <EcoSmartTitleComponent></EcoSmartTitleComponent>

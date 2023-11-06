@@ -3,9 +3,10 @@
     width: 100vw;
     position: absolute;
     background-image: url(./EcoSmart_BG.jpg);
+    /* background-image: url(./Mountain_BG.jpg);
+    background-image: url(./forest_BG.jpg); */
     background-repeat: no-repeat;
     background-size: cover;
-    filter: blur(3px);
     filter: contrast(80%);
 }
 
