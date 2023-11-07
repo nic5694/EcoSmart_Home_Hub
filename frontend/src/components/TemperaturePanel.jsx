@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import '../App.css';
 
 
 function TemperaturePanel() {
 
   const [currentTemperature, setCurrentTemperature] = useState(24)
+  const [currentGraph, setCurrentGraph] = useState("temp")
 
   const generateTempIconSVG = () => {
     return (
@@ -23,7 +25,7 @@ function TemperaturePanel() {
     )
   }
 
-  const data = [
+  const dataTemp = [
     {
       hour: '00:00',
       temp: 24,
@@ -122,19 +124,127 @@ function TemperaturePanel() {
     },
   ];
 
+  const dataHum = [
+    {
+      hour: '00:00',
+      temp: 20,
+    },
+    {
+      hour: '01:00',
+      temp: 10,
+    },
+    {
+      hour: '02:00',
+      temp: 25,
+    },
+    {
+      hour: '03:00',
+      temp: 15,
+    },
+    {
+      hour: '04:00',
+      temp: 28,
+    },
+    {
+      hour: '05:00',
+      temp: 12,
+    },
+    {
+      hour: '06:00',
+      temp: 35,
+    },
+    {
+      hour: '07:00',
+      temp: 12,
+    },
+    {
+      hour: '08:00',
+      temp: 5,
+    },
+    {
+      hour: '09:00',
+      temp: 20,
+    },
+    {
+      hour: '10:00',
+      temp: 15,
+    },
+    {
+      hour: '11:00',
+      temp: 10,
+    },
+    {
+      hour: '12:00',
+      temp: 27,
+    },
+    {
+      hour: '13:00',
+      temp: 33,
+    },
+    {
+      hour: '14:00',
+      temp: 4,
+    },
+    {
+      hour: '15:00',
+      temp: 17,
+    },
+    {
+      hour: '16:00',
+      temp: 18,
+    },
+    {
+      hour: '17:00',
+      temp: 14,
+    },
+    {
+      hour: '18:00',
+      temp: 22,
+    },
+    {
+      hour: '19:00',
+      temp: 35,
+    },
+    {
+      hour: '20:00',
+      temp: 10,
+    },
+    {
+      hour: '21:00',
+      temp: 12,
+    },
+    {
+      hour: '22:00',
+      temp: 22,
+    },
+    {
+      hour: '23:00',
+      temp: 10,
+    },
+  ];
+
   return (
     <div class="TemperaturePanelContainer">
 
       <div style={{color: 'rgba(0,0,0,0.2)', fontWeight: '500', fontSize:'30px', display: 'flex', justifyContent: 'space-between', padding: '15px', alignItems: 'center'}}>
-        <di style={{display: 'flex', alignItems: "center", gap: "10px"}}>
+        <div style={{display: 'flex', alignItems: "center", gap: "10px"}}>
           <div>{generateTempIconSVG()}</div>
-          <div style={{fontSize: '15px'}}>Temperature</div>
-        </di>
-        <div>{currentTemperature} {generateDegreeCelsiusIconSVG()}</div>
+          <div style={{fontSize: '15px'}}>
+            
+            <span class="graphBtn" onClick={() => setCurrentGraph("temp")}>Temperature</span> | <span class="graphBtn" onClick={() => setCurrentGraph("hum")}>Humidity</span> 
+            
+          </div>
+        </div>
+        <div> 
+          
+          {currentGraph === "temp"? <div>{currentTemperature} {generateDegreeCelsiusIconSVG()}</div> : <div>57%</div>}
+        </div>
       </div>
 
+      {currentGraph === "temp" ?
+      /* Temperature Graph */
       <div style={{ display: 'flex', justifyContent: 'center', fontSize: '12px'}}>
-        <AreaChart width={625} height={200} data={data}
+        <AreaChart width={625} height={200} data={dataTemp}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
           <defs>
             {/* <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -153,9 +263,36 @@ function TemperaturePanel() {
           {/* <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" /> */}
           <Area type="monotone" dataKey="temp" unit={'°C'} name='Temperature' stroke="lightgray" fillOpacity={1} fill="url(#temp)" />
         </AreaChart>
-      </div>
+      </div> 
+      
+      : 
+      /* Humidity Graph */
+      <div style={{ display: 'flex', justifyContent: 'center', fontSize: '12px'}}>
+          <AreaChart width={625} height={200} data={dataHum}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <defs>
+              {/* <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+              </linearGradient> */}
+              <linearGradient id="temp" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="lightblue" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="lightblue" stopOpacity={0}/>
+              </linearGradient>
+            </defs>
+            <XAxis dataKey="hour" />
+            <YAxis unit={'%'}/>
+            {/* <CartesianGrid strokeDasharray="3 3" /> */}
+            <Tooltip/>
+            {/* <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" /> */}
+            <Area type="monotone" dataKey="temp" unit={'%'} name='Temperature' stroke="lightblue" fillOpacity={1} fill="url(#temp)" />
+          </AreaChart>
+        </div> 
+    
+      }
 
     </div>
+    
   )
 }
 
