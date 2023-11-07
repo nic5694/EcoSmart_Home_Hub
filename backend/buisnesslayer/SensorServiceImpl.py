@@ -5,7 +5,7 @@ from datalayer.SensorType import SensorType
 
 class SensorServiceImpl(SensorService):
     def __init__(self):
-        self.sensor1 = Sensor(1, "Kitchen Temperature", SensorType.TEMPERATURE, 0.0)
+        self.sensor1 = Sensor(1, "Kitchen Temperature", SensorType.TEMPERATURE, 0.0, 18)
         self.sensor2 = Sensor(2, "Kitchen Mouvement", SensorType.MOTION, 0.0)
 
         self.Sensors = {

@@ -1,7 +1,7 @@
 from abc import ABC, ABCMeta, abstractmethod
 
 class LightService(ABC):
-    @abstractmethod
+    #@abstractmethod
     def getLightState(self, lightIdentifier: str):
         pass
     def toggleLightStatus(self, lightIdentifier: str):
