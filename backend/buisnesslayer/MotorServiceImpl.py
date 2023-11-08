@@ -1,4 +1,3 @@
-from .LightService import LightService
 from datalayer.Light import Light, LightState
 import json
 import RPi.GPIO as GPIO

@@ -4,12 +4,11 @@ from gpiozero import LED, Button
 
 
 class Light:
-    def __init__(self, id: int, name: str, state: LightState, brightness: float, color: str, ledPinNum: int):
+    def __init__(self, id: int, name: str, state: LightState, color: str, ledPinNum: int):
         self.id = id
         self.lightIdentifier = str(uuid.uuid4())
         self.name = name
         self.state = state
-        self.brightness = brightness
         self.color = color
         self.ledPinNum = ledPinNum
 
@@ -30,12 +29,6 @@ class Light:
 
     def set_state(self, state):
         self.state = state
-
-    def get_brightness(self):
-        return self.brightness
-
-    def set_brightness(self, brightness):
-        self.brightness = brightness
 
     def get_color(self):
         return self.color

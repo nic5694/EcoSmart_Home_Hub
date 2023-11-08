@@ -1,16 +1,13 @@
-import SensorType
+
 import uuid
 import RPi.GPIO as GPIO
 
 class Sensor:
-    def __init__(self, id:int, name: str, type: SensorType, value: float, pin: int):
+    def __init__(self, id:int, name: str, sensorType: str, pin: int):
         self.id = id
         self.sensorIdentifier = str(uuid.uuid4())
         self.name = name
-        self.type = type
-        self.value = value
+        self.type = sensorType
         self.pin = pin
-        
-
-    def get_sensor_identifier(self):
-        pass
+    def getSensorPin(self):
+        return self.pin

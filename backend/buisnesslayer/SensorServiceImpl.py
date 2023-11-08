@@ -1,18 +1,15 @@
-from .SensorService import SensorService
 from datalayer.Sensor import Sensor
-from datalayer.SensorType import SensorType
+import Adafruit_DHT
 
-
-class SensorServiceImpl(SensorService):
+class SensorServiceImpl():
     def __init__(self):
-        self.sensor1 = Sensor(1, "Kitchen Temperature", SensorType.TEMPERATURE, 0.0, 18)
-        self.sensor2 = Sensor(2, "Kitchen Mouvement", SensorType.MOTION, 0.0)
+        self.tempSensor = Sensor(1, "Kitchen Temperature", "TEMPERATURE", 14)
 
-        self.Sensors = {
-            self.sensor1.get_sensor_identifier(): self.sensor1,
-            self.sensor2.get_sensor_identifier(): self.sensor2
-        }
-
-    def getSensorValue(self, sensorIdentifier: str):
-        if sensorIdentifier in self.Sensors:
-            return self.Sensors[sensorIdentifier].get_value()
+    def getSensorValue(self):
+        print("Received request in the sensor value")
+        humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, self.tempSensor.getSensorPin())
+        if humidity is not None and temperature is not None:
+            print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
+        else:
+            print('Failed to get reading. Try again!')
+        return {"temperature":temperature, "humidity": humidity}
