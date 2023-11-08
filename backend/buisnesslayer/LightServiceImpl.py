@@ -10,13 +10,11 @@ Backward = 22
 class LightServiceImpl(LightService):
 
     def __init__(self):
-        self.led1 = Light(1, "Kitchen", LightState.OFF, 0.0, "white", 27)
+        self.led1 = Light(1, "Kitchen", LightState.OFF, 0.0, "white", 15)
         self.led2 = Light(2, "Living Room", LightState.OFF, 0.0, "white", 7)
         self.led3 = Light(3, "Bedroom", LightState.OFF, 0.0, "white", 8)
-        
-        
-        
-        #p = GPIO.PWM(11,50)
+        GPIO.setmode(GPIO.BCM)
+       
 
         # Create a dictionary to store the lights
         self.Lights = {
@@ -31,14 +29,21 @@ class LightServiceImpl(LightService):
             return self.Lights[lightIdentifier].get_state()
 
     def toggleLightStatus(self, lightIdentifier: str):
+        pinNum= self.Lights[lightIdentifier].get_ledPinNum()
         GPIO.setmode(GPIO.BCM)
+        GPIO.setup(pinNum, GPIO.OUT)
+        print(self.Lights[lightIdentifier].get_state())
         if lightIdentifier in self.Lights:
             if self.Lights[lightIdentifier].get_state() == LightState.ON:
                 self.Lights[lightIdentifier].set_state(LightState.OFF)
-                self.Lights[lightIdentifier].get_led().off()
+                GPIO.output(pinNum, GPIO.LOW)
+                print("Turning off")
             else:
                 self.Lights[lightIdentifier].set_state(LightState.ON)
-                self.Lights[lightIdentifier].get_led().on()
+               # self.Lights[lightIdentifier].get_led().on()
+                GPIO.output(pinNum, GPIO.HIGH)
+                print("Turning on")
+        print(self.Lights[lightIdentifier].get_state())
 
     def setLightBrightness(self, lightIdentifier: str, brightness: float):
         if lightIdentifier in self.Lights:
@@ -54,16 +59,19 @@ class LightServiceImpl(LightService):
 
     def to_json(obj):
         return json.dumps(obj, default=lambda obj: obj.__dict__)
+    def cleanup(self):
+        GPIO.setmode(GPIO.BCM)
+        for light in self.Lights:
+            self.Lights[light].set_state(LightState.OFF)
+        GPIO.cleanup()
     
+    '''
     def forward(self, x):
         while self.motor_running:
             GPIO.output(Forward, True)
             print("Moving Forward")
             time.sleep(x)
-
-
-
-'''
+            
     def forward(self, x):
         while self.motor_running:
             GPIO.output(Forward, True)

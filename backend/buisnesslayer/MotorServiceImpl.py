@@ -40,6 +40,5 @@ class MotorServiceImpl:
 		print("Stop motor thread called")
 		self.motor_running = False
 		GPIO.output(Forward, False)
-		#GPIO.cleanup()
 	def cleanup(self):
 		GPIO.cleanup()

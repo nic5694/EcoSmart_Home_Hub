@@ -12,7 +12,6 @@ class Light:
         self.brightness = brightness
         self.color = color
         self.ledPinNum = ledPinNum
-        self.led = LED(ledPinNum)
 
     def get_light_identifier(self):
         return self.lightIdentifier
@@ -43,8 +42,6 @@ class Light:
 
     def set_color(self, color):
         self.color = color
-    def get_led(self):
-        return self.led
     def get_ledPinNum(self):
         return self.ledPinNum
 

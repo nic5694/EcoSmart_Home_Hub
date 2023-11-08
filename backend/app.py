@@ -58,7 +58,18 @@ def start_motor():
 def stop_motor():
     motorService.stop_motor_thread()
     return "Motor stopped"
+    
+@app.route('/stop', methods=['POST'])
+def shutdown():
+    motorService.cleanup()
+    lightService.cleanup()
+    return "Pins cleaned up"
+
 '''
+@app.teardown_appcontext
+def teardown(exception):
+    motorService.cleanup();
+
 @app.route('/motor/start', methods=['GET'])
 def start_motor():
    # global motor_running
@@ -84,5 +95,6 @@ if __name__ == '__main__':
     motor_running = False
     lightService = LightServiceImpl()
     motorService = MotorServiceImpl(motor_running)
+    
     app.run()
-    motorService.cleanup()
+    
