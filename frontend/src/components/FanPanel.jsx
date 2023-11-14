@@ -1,17 +1,33 @@
 import React from 'react'
 import { useState } from 'react';
+import axios from 'axios';
+
+
 
 function FanPanel() {
     const [isClicked, setClicked] = useState(false);
     let [fanActive, setFanActive] = useState(false);
   
-    function presseffect(event) {
-      setClicked(true); // Apply the "clicked" class
-      setTimeout(() => {
-        setClicked(false);
-        setFanActive(!fanActive); // Remove the "clicked" class after a delay
-      }, 200);
-    }
+    const presseffect = async (event) => {
+      setClicked(true);
+  
+      try {
+        const response = await (fanActive ? axios.get('http://0.0.0.0:5000/fan/stop') : axios.get('http://0.0.0.0:5000/fan/start')); 
+  
+        console.log(response.data);
+        setFanActive(!fanActive);
+      } catch (error) {
+        console.error('Error making fan request:', error);
+      } finally {
+        setFanActive(!fanActive);
+        setTimeout(() => {
+          setClicked(false);
+         
+        }, 200);
+      }
+    };
+
+
   
     function generateFanSVG() {
       return (
