@@ -1,21 +1,39 @@
 import React from 'react'
 import '../App.css';
 import { useState } from 'react';
+import axios from "axios";
 
 function LedLightPanel(props) {
+  const {lightInfo} = props
+  //TODO: Add a state for the light info, to change the lights name depending on the response from the server
+ // let [light, setLight] = useState(lightInfo);
   const [isClicked, setClicked] = useState(false);
   let [lightActive, setLightActive] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
+  const offValue = "OFF"
+  const onValue = "ON"
+  const endpointBasedUrl = "http://192.168.1.137:5000/"
 
-  function presseffect(event) {
+  function pressEffect(event) {
     setClicked(true); // Apply the "clicked" class
     setTimeout(() => {
       setClicked(false);
       setLightActive(!lightActive); // Remove the "clicked" class after a delay
+      toggleLight()
       if(lightActive){
         setSliderValue(0)
       }
     }, 200);
+  }
+
+  const toggleLight = () => {
+      axios.get(endpointBasedUrl + 'lights/toggle/' + props.lightId)
+          .then(response => {
+            console.log(response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
   }
 
   function generateLightSVG() {
@@ -33,7 +51,7 @@ function LedLightPanel(props) {
   return (
     <div style={lightActive? {opacity: "100%"} : {opacity : "50%"}} className={`ledLightPanelContainer ${isClicked ? 'clicked' : ''}`}>
 
-      <div onClick={presseffect}>
+      <div onClick={pressEffect}>
         <div class="lightIconAndActiveContainer">
 
           <div >
@@ -50,16 +68,17 @@ function LedLightPanel(props) {
             Led light {props.number}
           </div>
 
-          <div style={{fontWeight: "500", color: "Black", opacity: "0.3"}}>
-            {sliderValue}%
-          </div>
+          {/*<div style={{fontWeight: "500", color: "Black", opacity: "0.3"}}>*/}
+          {/*  {sliderValue}%*/}
+          {/*</div>*/}
         </div>
 
       </div>
 
-      <div style={{display: "flex", justifyContent: "center"}}>
-        <input onChange={lightActive ? handleSliderChange : null} class="slider" type="range" id={props.sliderId} min="0" max="100" step="1" value={sliderValue} />
-      </div>
+      {//might not be dimming the light due to gpio not being able to might need to remove
+        /*<div style={{display: "flex", justifyContent: "center"}}>*/}
+      {/*  <input onChange={lightActive ? handleSliderChange : null} class="slider" type="range" id={props.sliderId} min="0" max="100" step="1" value={sliderValue} />*/}
+      {/*</div>*/}
         
     </div>
   )

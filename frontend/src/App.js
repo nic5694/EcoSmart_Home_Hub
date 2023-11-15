@@ -5,8 +5,35 @@ import TimePanel from './components/TimePanel';
 import HumidityPanel from './components/HumidityPanel';
 import TemperaturePanel from './components/TemperaturePanel';
 import FanPanel from './components/FanPanel';
+import axios, {get} from "axios";
+import {useEffect, useState} from "react";
+
 
 function App() {
+    const endpointBasedUrl = "http://192.168.1.137:5000/";
+
+    // Use state to manage the LEDs data
+    const [leds, setLeds] = useState({});
+
+    // Declare useEffect to call the API
+    useEffect(() => {
+        const getLeds = () => {
+            axios
+                .get(endpointBasedUrl + "lights")
+                .then((response) => {
+                    console.log(response.data);
+                    setLeds(response.data); // Update the state with the fetched data
+                })
+                .catch((error) => {
+                    // Handle errors
+                    console.log(error);
+                });
+        };
+
+        // Call the function to fetch data
+        getLeds();
+    }, []);
+    console.log("Keys: " + Object.keys(leds)[0])
   return (
     <>
       <div class="bgImage" style={{filter: "blur(3px)"}}></div>
@@ -18,8 +45,8 @@ function App() {
 
             <div class="leftSideContainer">
 
-              <div><LedLightPanel number="1" sliderId="slider1"></LedLightPanel></div>
-              <div><LedLightPanel number="2" sliderId="slider2"></LedLightPanel></div>
+              <div><LedLightPanel lightId={Object.keys(leds)[0]} lightInfo={leds[Object.keys(leds)[0]]} number="1" sliderId="slider1"></LedLightPanel></div>
+              <div><LedLightPanel lightId={Object.keys(leds)[1]} lightInfo={leds[Object.keys(leds)[1]]} number="2" sliderId="slider2"></LedLightPanel></div>
               <div><FanPanel></FanPanel></div>
 
             </div>
