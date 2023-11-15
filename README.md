@@ -2,6 +2,7 @@
 Iot 2 final project
 
 #Responses
+(ip address is variable for now working on getting a static ip)
 Endpoint: `http://192.168.1.137:5000/lights`
 returns: 
 ```json
