@@ -285,7 +285,7 @@ function TemperaturePanel() {
             {/* <CartesianGrid strokeDasharray="3 3" /> */}
             <Tooltip/>
             {/* <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" /> */}
-            <Area type="monotone" dataKey="temp" unit={'%'} name='Temperature' stroke="lightblue" fillOpacity={1} fill="url(#temp)" />
+            <Area type="monotone" dataKey="temp" unit={'%'} name='Humidity' stroke="lightblue" fillOpacity={1} fill="url(#temp)" />
           </AreaChart>
         </div> 
     
