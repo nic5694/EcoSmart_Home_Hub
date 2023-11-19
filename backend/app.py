@@ -67,9 +67,6 @@ def login_user():
         "email": user.email
     })
 
-if __name__ == "__main__":
-    app.run(debug=True)
-
 #Get all lights
 @app.route('/lights', methods=['GET'])
 def get_lights():
