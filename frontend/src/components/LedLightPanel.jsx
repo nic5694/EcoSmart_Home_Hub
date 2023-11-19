@@ -2,6 +2,8 @@ import React from 'react'
 import '../App.css';
 import { useState } from 'react';
 import axios from "axios";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function LedLightPanel(props) {
   const {lightInfo} = props
@@ -32,6 +34,7 @@ function LedLightPanel(props) {
             console.log(response.data)
           })
           .catch(error => {
+            toast.error('Error toggling light');
             console.log(error)
           })
   }
