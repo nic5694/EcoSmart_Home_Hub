@@ -19,7 +19,7 @@ const LoginPage = () => {
     console.log(email, password);
 
     if (!isEmailValid(email)) {
-      toast.error("Invalid Email Format");
+      toast.error("Please input a valid email");
       return;
     }
 
