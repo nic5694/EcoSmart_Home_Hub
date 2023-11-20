@@ -2,18 +2,26 @@ import React, { useState } from "react";
 import httpClient from "../httpClient";
 // @ts-ignore
 import { useAuth } from "../AuthContext";
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = useAuth();
 
+  const isEmailValid = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const logInUser = async () => {
     console.log(email, password);
-    
 
+    if (!isEmailValid(email)) {
+      toast.error("Invalid Email Format");
+      return;
+    }
 
     try {
       const resp = await httpClient.post("//localhost:5000/login", {
@@ -24,13 +32,10 @@ const LoginPage = () => {
       window.location.href = "/hub";
     } catch (error: any) {
       if (error.response.status === 401) {
-        alert("Invalid credentials");
+        toast("Invalid Credentials")
       }
     }
   };
-
-
- 
 
   return (
     <div>

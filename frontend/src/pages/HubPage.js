@@ -7,11 +7,10 @@ import TemperaturePanel from '../components/TemperaturePanel';
 import FanPanel from '../components/FanPanel';
 import axios, {get} from "axios";
 import {useEffect, useState} from "react";
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 // @ts-ignore
 import { useAuth } from '../AuthContext';
-
-
-
 
 function App() {
 
@@ -38,6 +37,7 @@ function App() {
                 })
                 .catch((error) => {
                     // Handle errors
+                    toast("Error getting the status of the lights")
                     console.log(error);
                 });
         };
@@ -56,7 +56,6 @@ function App() {
         <div class="dashboardContainer">
           <EcoSmartTitleComponent></EcoSmartTitleComponent>
          
-
           <div class="dashboard">
 
             <div class="leftSideContainer">
@@ -77,17 +76,11 @@ function App() {
               <div class="tempContainer">
                 <TemperaturePanel></TemperaturePanel>
               </div>
-
             </div>
-
           </div>
-
         </div>
       </div>
-
     </>
-
-
   );
 }
 

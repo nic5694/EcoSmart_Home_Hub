@@ -3,7 +3,6 @@ import httpClient from "../httpClient";
 // @ts-ignore
 import { useAuth } from '../AuthContext';
 
-
 const LandingPage: React.FC = () => {
 
   const auth = useAuth();
@@ -16,7 +15,6 @@ const LandingPage: React.FC = () => {
   return (
     <div>
       <h1>Welcome to this React Application</h1>
-    
           <div>
             <a href="/login">
               <button>Login</button>
@@ -25,14 +23,10 @@ const LandingPage: React.FC = () => {
               <button>Register</button>
             </a>
           </div>
-
           <div>
-            
             <button onClick={handleLogout}>Logout</button>
           </div>
         </div>
-        
-   
   );
 };
 
