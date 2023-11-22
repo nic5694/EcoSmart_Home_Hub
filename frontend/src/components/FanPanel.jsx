@@ -10,7 +10,7 @@ function FanPanel() {
     const presseffect = async (event) => {
       setClicked(true);
       try {
-        const response = await (fanActive ? axios.get('http://0.0.0.0:5000/fan/stop') : axios.get('http://0.0.0.0:5000/fan/start'))
+        const response = await (fanActive ? axios.get(baseEndpoint + 'fan/stop') : axios.get(baseEndpoint + 'fan/start'))
         console.log(response.data)
         setFanActive(!fanActive)
       } catch (error) {

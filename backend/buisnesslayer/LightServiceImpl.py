@@ -1,5 +1,5 @@
 from datalayer.Light import Light, LightState
-import json
+import jsonpickle
 import RPi.GPIO as GPIO
 import time
 import threading
@@ -11,7 +11,7 @@ class LightServiceImpl():
     def __init__(self):
         self.led1 = Light(1, "Kitchen", LightState.OFF, "white", 15)
         self.led2 = Light(2, "Living Room", LightState.OFF, "white", 26)
-        self.led3 = Light(3, "Bedroom", LightState.OFF, "white", 8)
+        self.led3 = Light(3, "Bedroom", LightState.OFF, "white", 6)
         GPIO.setmode(GPIO.BCM)
        
 
@@ -44,13 +44,15 @@ class LightServiceImpl():
         
     
     def getAllLights(self):
-        return self.Lights
+        resp = {
+            light_id: jsonpickle.encode(light, unpicklable = False)
+            for light_id, light in self.Lights.items()
+        }
+        return resp
 
     def getOneLight(self, id: int):
-        return self.Lights.get(int)
+        return jsonify(self.Lights.get(int))
 
-    def to_json(obj):
-        return json.dumps(obj, default=lambda obj: obj.__dict__)
     def cleanup(self):
         GPIO.setmode(GPIO.BCM)
         for light in self.Lights:
