@@ -14,7 +14,7 @@ function LedLightPanel(props) {
   const [sliderValue, setSliderValue] = useState(0);
   const offValue = "OFF"
   const onValue = "ON"
-  const endpointBasedUrl = "http://192.168.1.137:5000/"
+  const endpointBasedUrl = process.env.REACT_APP_TEMPLATE_URL_BACKEND
 
   function pressEffect(event) {
     setClicked(true); // Apply the "clicked" class

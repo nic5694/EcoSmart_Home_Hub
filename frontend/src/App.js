@@ -19,11 +19,9 @@ import PrivateRoute from './PrivateRoute';
 
 
 function App() {
-
-   
-  return (
+    const endpointBasedUrl = process.env.REACT_APP_TEMPLATE_URL_BACKEND;
+    return (
 <>
-
 <AuthProvider>
       <BrowserRouter>
         <Routes>

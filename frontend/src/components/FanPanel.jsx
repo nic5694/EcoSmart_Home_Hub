@@ -1,19 +1,16 @@
 import React from 'react'
 import { useState } from 'react'
-import axios from 'axios'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
+import axios from 'axios';
 function FanPanel() {
-    const [isClicked, setClicked] = useState(false)
-    let [fanActive, setFanActive] = useState(false)
-  
+    const [isClicked, setClicked] = useState(false);
+    let [fanActive, setFanActive] = useState(false);
+    const baseEndpoint = process.env.REACT_APP_TEMPLATE_URL_BACKEND
     const presseffect = async (event) => {
       setClicked(true);
-  
       try {
-        const response = await (fanActive ? axios.get('http://0.0.0.0:5000/fan/stop') : axios.get('http://0.0.0.0:5000/fan/start')) 
-  
+        const response = await (fanActive ? axios.get('http://0.0.0.0:5000/fan/stop') : axios.get('http://0.0.0.0:5000/fan/start'))
         console.log(response.data)
         setFanActive(!fanActive)
       } catch (error) {
