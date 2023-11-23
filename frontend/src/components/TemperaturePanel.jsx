@@ -1,12 +1,32 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import '../App.css';
+import axios from "axios";
 
 
 function TemperaturePanel() {
 
-  const [currentTemperature, setCurrentTemperature] = useState(24)
+  const [currentTemperature, setCurrentTemperature] = useState()
   const [currentGraph, setCurrentGraph] = useState("temp")
+
+  const endpointBasedUrl = process.env.REACT_APP_TEMPLATE_URL_BACKEND
+  const loadTemperature = async (callback) => {
+    try {
+      const res = axios.get(endpointBasedUrl + 'currentData')
+      setCurrentTemperature((await res).data.temperature);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      if (callback === undefined) {
+        await new Promise(resolve => setTimeout(resolve, 60000));
+        await loadTemperature();
+      }
+    }
+  }
+  useEffect(() => {
+    loadTemperature();
+  }, []);
+
 
   const generateTempIconSVG = () => {
     return (
