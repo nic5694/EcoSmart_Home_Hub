@@ -2,13 +2,24 @@ from datalayer.Sensor import Sensor
 from flask import Flask, jsonify
 import Adafruit_DHT
 from datetime import datetime
+import time
+import threading
 
 class SensorServiceImpl():
     def __init__(self):
         self.tempSensor = Sensor(1, "Kitchen Temperature", "TEMPERATURE", 14)
         self.count = 0
-
-    def collectData(self):
+        
+    def start_sensor_thread(self):
+        sensor_thread = threading.Thread(target=self.run_sensor_thread)
+        sensor_thread.start()
+    def run_sensor_thread(self):
+        print("Motor thread started")
+        while True:
+            self.collectData(60)
+    def cleanup(self):
+        GPIO.cleanup()
+    def collectData(self, delay):
         #getting pin number from the sensor object
         pinNum = self.tempSensor.getSensorPin()
         #opening the data file
@@ -17,14 +28,15 @@ class SensorServiceImpl():
         humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, pinNum)
         #create the json object
         s = {"id":self.count,"temperature":temperature, "time":datetime.now().strftime("%H:%M:%S")}
+        print("Wrote to file " + str(s))
         #write to the data file
         f.write(str(s))
         f.write("\n")
         #close data file
         f.close()
         self.count+=1
-        
-    '''
+        time.sleep(delay)
+    
     def getSensorValue(self):
         print("Received request in the sensor value")
         pinNum = self.tempSensor.getSensorPin()
@@ -36,4 +48,5 @@ class SensorServiceImpl():
         else:
             print('Failed to get reading. Try again!')
         return {"tem":temperature, "humidity": humidity}
-        '''
+        
+

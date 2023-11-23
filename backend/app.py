@@ -66,19 +66,19 @@ def shutdown():
     lightService.cleanup()
     return "Pins cleaned up"
 #retreive temperature
-@app.route('/temp', methods=['GET'])
+@app.route('/currentData', methods=['GET'])
 @cross_origin()
 def sensor():
     return jsonify(sensorService.getSensorValue())
 
-@app.route('/collect', methods=['GET'])
-@cross_origin()
+
 def collect():
-    sensorService.collectData()
+    sensorService.start_sensor_thread()
     return "Collecting"
 
 if __name__ == '__main__':
-    app.run()
+    app.run(threaded=True)
+    collect()
     
     '''
     lightService = LightServiceImpl()
@@ -116,6 +116,7 @@ def motor():
 # def get_lights():
 #     lights = lightService.getAllLights()
 #     return jsonify(lights)
+
 
 
 
