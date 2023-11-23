@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
 const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
+  const endpointBasedUrl = process.env.REACT_APP_TEMPLATE_URL_BACKEND
   const isEmailValid = (email: string) : boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
@@ -77,7 +77,7 @@ const RegisterPage: React.FC = () => {
         return
       }
       
-      const resp = await httpClient.post("//localhost:5000/register", {
+      const resp = await httpClient.post(endpointBasedUrl + 'register', {
         email,
         password,
       });

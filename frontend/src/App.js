@@ -29,7 +29,7 @@ function App() {
           <Route path="/hub" element={
           <PrivateRoute>
           <HubPage />
-          </PrivateRoute>    
+          </PrivateRoute>
           } />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/" element={<LandingPage />} />

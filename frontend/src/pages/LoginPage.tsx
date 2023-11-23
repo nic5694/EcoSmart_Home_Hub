@@ -71,6 +71,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = useAuth();
+  const endpointBasedUrl = process.env.REACT_APP_TEMPLATE_URL_BACKEND
 
   const isEmailValid = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -86,7 +87,7 @@ const LoginPage = () => {
     }
 
     try {
-      const resp = await httpClient.post("//localhost:5000/login", {
+      const resp = await httpClient.post(endpointBasedUrl + '/login', {
         email,
         password,
       });
