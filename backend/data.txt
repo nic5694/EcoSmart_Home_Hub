@@ -125,3 +125,7 @@
 {'id': 124, 'temperature': 27.0, 'time': '18:29:35'}
 {'id': 0, 'temperature': 22.0, 'time': '17:18:30'}
 {'id': 0, 'temperature': 23.0, 'time': '17:47:37'}
+{'id': 0, 'temperature': 17.0, 'time': '22:26:26'}
+{'id': 0, 'temperature': 17.0, 'time': '22:26:51'}
+{'id': 0, 'temperature': 21.0, 'time': '12:40:28'}
+{'id': 0, 'temperature': 21.0, 'time': '12:40:40'}
