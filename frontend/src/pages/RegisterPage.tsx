@@ -72,21 +72,38 @@ const RegisterPage: React.FC = () => {
 
   const registerUser = async () => {
     try {
-      if (!isEmailValid(email)) {
-        toast.error("Please input a valid email")
-        return
+      const errorMessages = [];
+
+      if (!email.trim() && !password.trim()) {
+        errorMessages.push("Please fill in both email and password");
+      } else {
+        if (!email.trim()) {
+          errorMessages.push("Please provide an email");
+        }
+  
+        if (!password.trim()) {
+          errorMessages.push("Please provide a password");
+        }
+  
+        if (!isEmailValid(email)) {
+          errorMessages.push("Please provide a valid email");
+        }
       }
-      
+  
+      if (errorMessages.length > 0) {
+        errorMessages.forEach((message) => toast.error(message));
+        return;
+      }
+
       const resp = await httpClient.post(endpointBasedUrl + 'register', {
         email,
         password,
       });
 
       window.location.href = "/login";
+      toast.success("Registration Successful")
     } catch (error: any) {
-      if (error.response.status === 401) {
-        toast("Invalid Credentials")
-      }
+        toast.error("Could not make the Register Request")
     }
   };
 

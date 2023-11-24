@@ -82,8 +82,26 @@ const LoginPage = () => {
   const logInUser = async () => {
     console.log(email, password);
 
-    if (!isEmailValid(email)) {
-      toast.error("Invalid Email Format");
+    const errorMessages = [];
+
+    if (!email.trim() && !password.trim()) {
+      errorMessages.push("Please fill in both email and password");
+    } else {
+      if (!email.trim()) {
+        errorMessages.push("Please provide an email");
+      }
+
+      if (!password.trim()) {
+        errorMessages.push("Please provide a password");
+      }
+
+      if (!isEmailValid(email)) {
+        errorMessages.push("Please input a valid email");
+      }
+    }
+
+    if (errorMessages.length > 0) {
+      errorMessages.forEach((message) => toast.error(message));
       return;
     }
 
