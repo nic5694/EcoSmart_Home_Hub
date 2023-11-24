@@ -17,7 +17,6 @@ CORS(app, supports_credentials=True)
 Forward = 17
 Backward = 22
 
-temperature_queue = []
 motor_running = False
 motorService = MotorServiceImpl(motor_running)
 lightService = LightServiceImpl()
@@ -29,7 +28,7 @@ with app.app_context():
 
 
 @app.route("/register", methods=["POST"])
-@cross_origin(supports_credentials=True)
+@cross_origin(allow_headers="*", supports_credentials=True)
 def register_user():
     email = request.json["email"]
     password = request.json["password"]
@@ -51,7 +50,7 @@ def register_user():
     })
 
 @app.route("/login", methods=["POST"])
-@cross_origin(supports_credentials=True)
+@cross_origin(allow_headers="*", supports_credentials=True)
 def login_user():
     email = request.json["email"]
     password = request.json["password"]
@@ -73,7 +72,7 @@ def login_user():
 
 #Get all lights
 @app.route('/lights', methods=['GET'])
-@cross_origin()
+@cross_origin(allow_headers="*", supports_credentials=True)
 def get_lights():
     '''resp = {
         'light1': jsonpickle.encode(LightServiceImpl.led1),
@@ -87,89 +86,52 @@ def get_lights():
 
 #toggle single light
 @app.route('/lights/toggle/<identifier>', methods=['GET'])
-@cross_origin()
+@cross_origin(allow_headers="*", supports_credentials=True)
 def toggle_light(identifier):
     return jsonpickle.encode(lightService.toggleLightStatus(identifier))
 
-
-@app.route('/')
-@cross_origin()
-def index():
-    return
-
 #Turn Fan on
 @app.route('/fan/start', methods=['GET'])
-@cross_origin()
+@cross_origin(allow_headers="*", supports_credentials=True)
 def start_motor():
     motorService.start_motor_thread()
     return "Motor started"
 
 @app.route('/fan/stop', methods=['GET'])
-@cross_origin()
+@cross_origin(allow_headers="*", supports_credentials=True)
 def stop_motor():
     motorService.stop_motor_thread()
     return "Motor stopped"
     
 #cleanup pins
 @app.route('/cleanup', methods=['POST'])
-@cross_origin()
+@cross_origin(allow_headers="*", supports_credentials=True)
 def shutdown():
     motorService.cleanup()
     lightService.cleanup()
     return "Pins cleaned up"
 #retreive temperature
 @app.route('/currentData', methods=['GET'])
-@cross_origin()
+@cross_origin(allow_headers="*", supports_credentials=True)
 def sensor():
     return jsonify(sensorService.getSensorValue())
 
+@app.route('/dataHistory/temperature', methods=['GET'])
+def getTemperatureDataHistory():
+    return sensorService.read_json_file("temp.txt")
+    
+@app.route('/dataHistory/humidity', methods=['GET'])
+def getHumidityDataHistory():
+    return sensorService.read_json_file("hum.txt")
 
 def collect():
     sensorService.start_sensor_thread()
     return "Collecting"
+collect_thread = threading.Thread(target=collect)
+collect_thread.start()
 
 if __name__ == '__main__':
-    collect()
     app.run(threaded=True)
-    
-    '''
-    lightService = LightServiceImpl()
-    motorService = MotorServiceImpl(motor_running)
-    sensorService = SensorServiceImpl()
-    '''
-    
-
-'''
-@app.teardown_appcontext
-def teardown(exception):
-    motorService.cleanup();
-
-@app.route('/motor/start', methods=['GET'])
-def start_motor():
-   # global motor_running
-    lightService.start_motor_thread()
-    return "Motor started"
-@app.route('/motor/stop', methods=['GET'])
-def stop_motor():
-   # global motor_running
-    print("Testing")
-    lightService.stop_motor_thread()
-    return "Motor Stopped"
-    
-
-@app.route('/motor', methods=['GET'])
-def motor():
-    lightService.forward(1)
-    return "motor turn"
-
-'''
-
-# @app.route('/lights', methods=['GET'])
-# def get_lights():
-#     lights = lightService.getAllLights()
-#     return jsonify(lights)
-
-
 
 
 
