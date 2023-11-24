@@ -1,6 +1,5 @@
 # EcoSmart_Home_Hub
-Iot 2 final project
-
+Iot 2 final project at Champlain College Saint-Lambert. 
 #Responses
 (ip address is variable for now working on getting a static ip)
 Endpoint: `http://192.168.1.137:5000/lights`
