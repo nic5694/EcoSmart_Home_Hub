@@ -21,7 +21,7 @@ function App() {
 
   };
 
-    const endpointBasedUrl = "http://192.168.1.137:5000/";
+    const endpointBasedUrl = process.env.REACT_APP_TEMPLATE_URL_BACKEND;
 
     // Use state to manage the LEDs data
     const [leds, setLeds] = useState({});

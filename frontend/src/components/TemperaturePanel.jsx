@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import {Area, AreaChart, Tooltip, XAxis, YAxis} from 'recharts';
 import '../App.css';
 import axios from "axios";
 
@@ -8,6 +8,8 @@ function TemperaturePanel() {
 
   const [currentTemperature, setCurrentTemperature] = useState()
   const [currentGraph, setCurrentGraph] = useState("temp")
+  const [dataTemp, setDataTemp] = useState([])
+  const [dataHum, setDataHum] = useState([])
 
   const endpointBasedUrl = process.env.REACT_APP_TEMPLATE_URL_BACKEND
   const loadTemperature = async (callback) => {
@@ -23,9 +25,59 @@ function TemperaturePanel() {
       }
     }
   }
+  const loadTempFile = async () => {
+    try {
+      const res = await axios.get(endpointBasedUrl + 'dataHistory/temperature');
+      console.log("The response is: ", res.data);
+      setDataTemp(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const startTemperatureInterval = () => {
+    loadTempFile()
+
+    // Set up an interval to call the function every hour (3600000 milliseconds)
+    const intervalId = setInterval(loadTempFile, 3600000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  };
+
+  const loadHumFile = async () => {
+    try {
+      const res = await axios.get(endpointBasedUrl + 'dataHistory/humidity');
+      const jsonArr = res.data;
+      setDataHum(jsonArr);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const startHumidityInterval = () => {
+    loadHumFile()
+    // Set up an interval to call the function every hour (3600000 milliseconds)
+    const intervalId = setInterval(loadHumFile, 3600000);
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  };
+
+
   useEffect(() => {
-    loadTemperature();
+    // Start humidity interval and get the cleanup function
+    return startHumidityInterval();
   }, []);
+
+  useEffect(() => {
+    // Start temperature interval and get the cleanup function
+    return startTemperatureInterval();
+  }, []);
+  useEffect(() => {
+    loadTempFile();
+    loadHumFile()
+    loadTemperature()
+  }, []);
+
+
 
 
   const generateTempIconSVG = () => {
@@ -45,203 +97,203 @@ function TemperaturePanel() {
     )
   }
 
-  const dataTemp = [
-    {
-      hour: '00:00',
-      temp: 24,
-    },
-    {
-      hour: '01:00',
-      temp: 10,
-    },
-    {
-      hour: '02:00',
-      temp: 20,
-    },
-    {
-      hour: '03:00',
-      temp: 5,
-    },
-    {
-      hour: '04:00',
-      temp: 27,
-    },
-    {
-      hour: '05:00',
-      temp: 15,
-    },
-    {
-      hour: '06:00',
-      temp: 30,
-    },
-    {
-      hour: '07:00',
-      temp: 10,
-    },
-    {
-      hour: '08:00',
-      temp: 20,
-    },
-    {
-      hour: '09:00',
-      temp: 7,
-    },
-    {
-      hour: '10:00',
-      temp: 3,
-    },
-    {
-      hour: '11:00',
-      temp: 26,
-    },
-    {
-      hour: '12:00',
-      temp: 20,
-    },
-    {
-      hour: '13:00',
-      temp: 30,
-    },
-    {
-      hour: '14:00',
-      temp: 10,
-    },
-    {
-      hour: '15:00',
-      temp: 17,
-    },
-    {
-      hour: '16:00',
-      temp: 5,
-    },
-    {
-      hour: '17:00',
-      temp: 20,
-    },
-    {
-      hour: '18:00',
-      temp: 27,
-    },
-    {
-      hour: '19:00',
-      temp: 30,
-    },
-    {
-      hour: '20:00',
-      temp: 18,
-    },
-    {
-      hour: '21:00',
-      temp: 15,
-    },
-    {
-      hour: '22:00',
-      temp: 22,
-    },
-    {
-      hour: '23:00',
-      temp: 10,
-    },
-  ];
-
-  const dataHum = [
-    {
-      hour: '00:00',
-      temp: 20,
-    },
-    {
-      hour: '01:00',
-      temp: 10,
-    },
-    {
-      hour: '02:00',
-      temp: 25,
-    },
-    {
-      hour: '03:00',
-      temp: 15,
-    },
-    {
-      hour: '04:00',
-      temp: 28,
-    },
-    {
-      hour: '05:00',
-      temp: 12,
-    },
-    {
-      hour: '06:00',
-      temp: 35,
-    },
-    {
-      hour: '07:00',
-      temp: 12,
-    },
-    {
-      hour: '08:00',
-      temp: 5,
-    },
-    {
-      hour: '09:00',
-      temp: 20,
-    },
-    {
-      hour: '10:00',
-      temp: 15,
-    },
-    {
-      hour: '11:00',
-      temp: 10,
-    },
-    {
-      hour: '12:00',
-      temp: 27,
-    },
-    {
-      hour: '13:00',
-      temp: 33,
-    },
-    {
-      hour: '14:00',
-      temp: 4,
-    },
-    {
-      hour: '15:00',
-      temp: 17,
-    },
-    {
-      hour: '16:00',
-      temp: 18,
-    },
-    {
-      hour: '17:00',
-      temp: 14,
-    },
-    {
-      hour: '18:00',
-      temp: 22,
-    },
-    {
-      hour: '19:00',
-      temp: 35,
-    },
-    {
-      hour: '20:00',
-      temp: 10,
-    },
-    {
-      hour: '21:00',
-      temp: 12,
-    },
-    {
-      hour: '22:00',
-      temp: 22,
-    },
-    {
-      hour: '23:00',
-      temp: 10,
-    },
-  ];
+  // const dataTemp = [
+  //   {
+  //     hour: '00:00',
+  //     temp: 24,
+  //   },
+  //   {
+  //     hour: '01:00',
+  //     temp: 10,
+  //   },
+  //   {
+  //     hour: '02:00',
+  //     temp: 20,
+  //   },
+  //   {
+  //     hour: '03:00',
+  //     temp: 5,
+  //   },
+  //   {
+  //     hour: '04:00',
+  //     temp: 27,
+  //   },
+  //   {
+  //     hour: '05:00',
+  //     temp: 15,
+  //   },
+  //   {
+  //     hour: '06:00',
+  //     temp: 30,
+  //   },
+  //   {
+  //     hour: '07:00',
+  //     temp: 10,
+  //   },
+  //   {
+  //     hour: '08:00',
+  //     temp: 20,
+  //   },
+  //   {
+  //     hour: '09:00',
+  //     temp: 7,
+  //   },
+  //   {
+  //     hour: '10:00',
+  //     temp: 3,
+  //   },
+  //   {
+  //     hour: '11:00',
+  //     temp: 26,
+  //   },
+  //   {
+  //     hour: '12:00',
+  //     temp: 20,
+  //   },
+  //   {
+  //     hour: '13:00',
+  //     temp: 30,
+  //   },
+  //   {
+  //     hour: '14:00',
+  //     temp: 10,
+  //   },
+  //   {
+  //     hour: '15:00',
+  //     temp: 17,
+  //   },
+  //   {
+  //     hour: '16:00',
+  //     temp: 5,
+  //   },
+  //   {
+  //     hour: '17:00',
+  //     temp: 20,
+  //   },
+  //   {
+  //     hour: '18:00',
+  //     temp: 27,
+  //   },
+  //   {
+  //     hour: '19:00',
+  //     temp: 30,
+  //   },
+  //   {
+  //     hour: '20:00',
+  //     temp: 18,
+  //   },
+  //   {
+  //     hour: '21:00',
+  //     temp: 15,
+  //   },
+  //   {
+  //     hour: '22:00',
+  //     temp: 22,
+  //   },
+  //   {
+  //     hour: '23:00',
+  //     temp: 10,
+  //   },
+  // ];
+  //
+  // const dataHum = [
+  //   {
+  //     hour: '00:00',
+  //     temp: 20,
+  //   },
+  //   {
+  //     hour: '01:00',
+  //     temp: 10,
+  //   },
+  //   {
+  //     hour: '02:00',
+  //     temp: 25,
+  //   },
+  //   {
+  //     hour: '03:00',
+  //     temp: 15,
+  //   },
+  //   {
+  //     hour: '04:00',
+  //     temp: 28,
+  //   },
+  //   {
+  //     hour: '05:00',
+  //     temp: 12,
+  //   },
+  //   {
+  //     hour: '06:00',
+  //     temp: 35,
+  //   },
+  //   {
+  //     hour: '07:00',
+  //     temp: 12,
+  //   },
+  //   {
+  //     hour: '08:00',
+  //     temp: 5,
+  //   },
+  //   {
+  //     hour: '09:00',
+  //     temp: 20,
+  //   },
+  //   {
+  //     hour: '10:00',
+  //     temp: 15,
+  //   },
+  //   {
+  //     hour: '11:00',
+  //     temp: 10,
+  //   },
+  //   {
+  //     hour: '12:00',
+  //     temp: 27,
+  //   },
+  //   {
+  //     hour: '13:00',
+  //     temp: 33,
+  //   },
+  //   {
+  //     hour: '14:00',
+  //     temp: 4,
+  //   },
+  //   {
+  //     hour: '15:00',
+  //     temp: 17,
+  //   },
+  //   {
+  //     hour: '16:00',
+  //     temp: 18,
+  //   },
+  //   {
+  //     hour: '17:00',
+  //     temp: 14,
+  //   },
+  //   {
+  //     hour: '18:00',
+  //     temp: 22,
+  //   },
+  //   {
+  //     hour: '19:00',
+  //     temp: 35,
+  //   },
+  //   {
+  //     hour: '20:00',
+  //     temp: 10,
+  //   },
+  //   {
+  //     hour: '21:00',
+  //     temp: 12,
+  //   },
+  //   {
+  //     hour: '22:00',
+  //     temp: 22,
+  //   },
+  //   {
+  //     hour: '23:00',
+  //     temp: 10,
+  //   },
+  // ];
 
   return (
     <div class="TemperaturePanelContainer">
