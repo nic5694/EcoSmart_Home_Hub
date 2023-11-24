@@ -37,8 +37,8 @@ const Header: React.FC = () => {
     <header style={headerStyle}>
       <h1 style={{ color: 'white' }}>EcoSmart Home Hub</h1>
       <nav style={navStyle}>
+        <Link to="/" style={navLinkStyle}>Home</Link>
         <Link to="/login" style={navLinkStyle}>Login</Link>
-       
       </nav>
     </header>
   );

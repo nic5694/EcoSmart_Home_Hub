@@ -41,6 +41,7 @@ const Header: React.FC = () => {
     <header style={headerStyle}>
       <h1 style={{ color: 'white' }}>EcoSmart Home Hub</h1>
       <nav style={navStyle}>
+        <Link to="/" style={navLinkStyle}>Home</Link>
         <Link to="/register" style={navLinkStyle}>Register</Link>
         {auth.isAuthenticated && (
           <button style={logoutButtonStyle} onClick={handleLogout}>Logout</button>
