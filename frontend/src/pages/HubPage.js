@@ -18,7 +18,6 @@ function App() {
 
   const handleLogout = () => {
     auth.logout();
-
   };
 
     const endpointBasedUrl = process.env.REACT_APP_TEMPLATE_URL_BACKEND;
@@ -37,7 +36,7 @@ function App() {
                 })
                 .catch((error) => {
                     // Handle errors
-                    toast("Error getting the status of the lights")
+                    toast.error("Error getting the status of the lights")
                     console.log(error);
                 });
         };
@@ -48,13 +47,10 @@ function App() {
     console.log("Keys: " + Object.keys(leds)[0])
   return (
 <>
-<div>
-            <button onClick={handleLogout}>Logout</button>
-          </div>
       <div class="bgImage" style={{filter: "blur(3px)"}}></div>
       <div class="container">
         <div class="dashboardContainer">
-          <EcoSmartTitleComponent></EcoSmartTitleComponent>
+          <EcoSmartTitleComponent LogOut={handleLogout}></EcoSmartTitleComponent>
          
           <div class="dashboard">
 

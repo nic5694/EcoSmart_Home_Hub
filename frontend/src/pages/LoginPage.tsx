@@ -154,7 +154,7 @@ const LoginPage = () => {
       window.location.href = "/hub";
     } catch (error: any) {
       if (error.response.status === 401) {
-        toast("Invalid Credentials")
+        toast.error("Invalid Credentials")
       }
     }
   };
