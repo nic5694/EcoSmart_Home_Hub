@@ -7,21 +7,23 @@ import axios from "axios";
 function TemperaturePanel() {
 
   const [currentTemperature, setCurrentTemperature] = useState()
+  const [currentHumidity, setCurrentHumidity] = useState()
   const [currentGraph, setCurrentGraph] = useState("temp")
   const [dataTemp, setDataTemp] = useState([])
   const [dataHum, setDataHum] = useState([])
 
   const endpointBasedUrl = process.env.REACT_APP_TEMPLATE_URL_BACKEND
-  const loadTemperature = async (callback) => {
+  const loadTemperatureAndHumidity = async (callback) => {
     try {
       const res = axios.get(endpointBasedUrl + 'currentData')
       setCurrentTemperature((await res).data.temperature);
+      setCurrentHumidity((await res).data.humidity);
     } catch (err) {
       console.log(err);
     } finally {
       if (callback === undefined) {
         await new Promise(resolve => setTimeout(resolve, 60000));
-        await loadTemperature();
+        await loadTemperatureAndHumidity();
       }
     }
   }
@@ -74,7 +76,7 @@ function TemperaturePanel() {
   useEffect(() => {
     loadTempFile();
     loadHumFile()
-    loadTemperature()
+    loadTemperatureAndHumidity()
   }, []);
 
 
@@ -304,12 +306,12 @@ function TemperaturePanel() {
           <div style={{fontSize: '15px'}}>
             
             <span class="graphBtn" onClick={() => setCurrentGraph("temp")}>Temperature</span> | <span class="graphBtn" onClick={() => setCurrentGraph("hum")}>Humidity</span> 
-            
+        
           </div>
         </div>
         <div> 
           
-          {currentGraph === "temp"? <div>{currentTemperature} {generateDegreeCelsiusIconSVG()}</div> : <div>57%</div>}
+          {currentGraph === "temp"? <div>{currentTemperature} {generateDegreeCelsiusIconSVG()}</div> : <div>{currentHumidity}</div>}
         </div>
       </div>
 
