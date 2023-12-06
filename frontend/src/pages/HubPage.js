@@ -47,7 +47,7 @@ function App() {
     console.log("Keys: " + Object.keys(leds)[0])
   return (
 <>
-      <div class="bgImage" style={{filter: "blur(3px)"}}></div>
+      <div class="bgImage" style={{filter: "blur(3px) contrast(80%)"}}></div>
       <div class="container">
         <div class="dashboardContainer">
           <EcoSmartTitleComponent LogOut={handleLogout}></EcoSmartTitleComponent>
