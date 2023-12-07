@@ -11,15 +11,13 @@ class LightServiceImpl():
     def __init__(self):
         self.led1 = Light(1, "Kitchen", LightState.OFF, "white", 15)
         self.led2 = Light(2, "Living Room", LightState.OFF, "white", 26)
-        self.led3 = Light(3, "Bedroom", LightState.OFF, "white", 6)
         GPIO.setmode(GPIO.BCM)
        
 
         # Create a dictionary to store the lights
         self.Lights = {
             self.led1.get_light_identifier(): self.led1,
-            self.led2.get_light_identifier(): self.led2,
-            self.led3.get_light_identifier(): self.led3
+            self.led2.get_light_identifier(): self.led2
         }
         
 

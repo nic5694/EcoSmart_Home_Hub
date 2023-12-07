@@ -10,6 +10,7 @@ import jsonpickle
 import RPi.GPIO as GPIO
 import threading
 
+
 app = Flask(__name__)
 app.config.from_object(ApplicationConfig)
 bcrypt = Bcrypt(app) 
@@ -116,13 +117,13 @@ def shutdown():
 def sensor():
     return jsonify(sensorService.getSensorValue())
 
-@app.route('/dataHistory/temperature', methods=['GET'])
-def getTemperatureDataHistory():
-    return sensorService.read_json_file("temp.txt")
+@app.route('/dataHistory/temperature/<filenamegiven>', methods=['GET'])
+def getTemperatureDataHistory(filenamegiven):
+    return sensorService.read_json_file(filenamegiven)
     
-@app.route('/dataHistory/humidity', methods=['GET'])
-def getHumidityDataHistory():
-    return sensorService.read_json_file("hum.txt")
+@app.route('/dataHistory/humidity/<filenamegiven>', methods=['GET'])
+def getHumidityDataHistory(filenamegiven):
+    return sensorService.read_json_file(filenamegiven)
 
 def collect():
     sensorService.start_sensor_thread()
