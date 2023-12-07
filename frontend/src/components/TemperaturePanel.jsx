@@ -6,7 +6,7 @@ import axios from "axios";
 
 function TemperaturePanel() {
 
-  // const data = [
+  // const dataTemp2 = [
   //   {
   //     hour: '00:00',
   //     temp: 24,
@@ -113,8 +113,8 @@ function TemperaturePanel() {
   const [dataHum, setDataHum] = useState([])
 
   const [date, setDate] = useState('2023-01-01')
-  
-  
+
+
   const endpointBasedUrl = process.env.REACT_APP_TEMPLATE_URL_BACKEND
   const loadTemperatureAndHumidity = async (callback) => {
     try {
@@ -132,7 +132,7 @@ function TemperaturePanel() {
   }
   const loadTempFile = async () => {
     try {
-      const res = await axios.get(endpointBasedUrl + 'dataHistory/temperature');
+      const res = await axios.get(endpointBasedUrl + 'dataHistory/temperature/' + date + 'temp.txt');
       console.log("The response is: ", res.data);
       setDataTemp(res.data);
     } catch (error) {
@@ -151,7 +151,7 @@ function TemperaturePanel() {
 
   const loadHumFile = async () => {
     try {
-      const res = await axios.get(endpointBasedUrl + 'dataHistory/humidity');
+      const res = await axios.get(endpointBasedUrl + 'dataHistory/humidity/' + date + 'hum.txt');
       const jsonArr = res.data;
       setDataHum(jsonArr);
     } catch (error) {
@@ -178,23 +178,33 @@ function TemperaturePanel() {
   }, []);
 
   useEffect(() => {
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    setDate(formattedDate)
     loadTempFile();
-    loadHumFile()
+    loadHumFile();
     loadTemperatureAndHumidity()
   }, []);
 
+  useEffect(() => {
+    loadTempFile();
+    loadHumFile();
+    }, [date]);
   const leftArrowFunction = async () => {
     // Get the date for one day before the current date
     const currentDate = new Date();
     currentDate.setDate(currentDate.getDate() - 1);
 
     // Ensure the calculated date is not before the current day
-    const calculatedDate = currentDate < new Date() ? new Date() : currentDate;
-
-    const day = calculatedDate.getDate().toString().padStart(2, '0');
-    const month = (calculatedDate.getMonth() + 1).toString().padStart(2, '0');
-    const year = calculatedDate.getFullYear();
+//    const calculatedDate = currentDate < new Date() ? new Date() : currentDate;
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear();
     const formattedDate = `${day}-${month}-${year}`;
+    setDate(formattedDate)
     let tempDate = formattedDate.concat("temp.txt");
     let humDate = formattedDate.concat("hum.txt");
     console.log("The temp date is: ", tempDate)
@@ -233,6 +243,7 @@ function TemperaturePanel() {
       if (currentGraph === "temp") {
         const res = await axios.get(endpointBasedUrl + 'dataHistory/temperature/' + tempDate);
         setDataTemp(res.data);
+        setDate(formattedDate)
       } else {
         const res = await axios.get(endpointBasedUrl + 'dataHistory/humidity/' + humDate);
         setDataHum(res.data);
@@ -279,7 +290,7 @@ function TemperaturePanel() {
   }
 
   //
-  // const dataHum = [
+  // const dataHum2 = [
   //   {
   //     hour: '00:00',
   //     temp: 20,
@@ -385,15 +396,21 @@ function TemperaturePanel() {
         <div style={{display: 'flex', alignItems: "center", gap: "10px"}}>
           <div>{generateTempIconSVG()}</div>
           <div style={{fontSize: '15px'}}>
-            
-            <span class="graphBtn" onClick={() => setCurrentGraph("temp")}>Temperature</span> | <span class="graphBtn" onClick={() => setCurrentGraph("hum")}>Humidity</span> 
-        
+
+            <span class="graphBtn" onClick={() => {
+              setCurrentGraph("temp")
+                loadTempFile()
+            }}>Temperature</span> | <span class="graphBtn" onClick={() => {
+              setCurrentGraph("hum")
+            loadHumFile()
+            }}>Humidity</span>
+
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center',}}> 
-          
-          {currentGraph === "temp"? <div>{currentTemperature} {generateDegreeCelsiusIconSVG()}</div> : <div>{currentHumidity} %</div>} 
-          
+        <div style={{ display: 'flex', alignItems: 'center',}}>
+
+          {currentGraph === "temp"? <div>{currentTemperature} {generateDegreeCelsiusIconSVG()}</div> : <div>{currentHumidity} %</div>}
+
           <div style={{marginLeft: "5px", fontSize: "20px"}}> | {date}</div>
         </div>
       </div>
@@ -410,7 +427,7 @@ function TemperaturePanel() {
 
         {/* graph */}
         <div>
-          
+
           {currentGraph === "temp" ?
           /* Temperature Graph */
             <div style={{ display: 'flex', justifyContent: 'center', fontSize: '12px'}}>
@@ -433,9 +450,9 @@ function TemperaturePanel() {
                 {/* <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" /> */}
                 <Area type="monotone" dataKey="temp" unit={'°C'} name='Temperature' stroke="lightgray" fillOpacity={1} fill="url(#temp)" />
               </AreaChart>
-            </div> 
-          
-          : 
+            </div>
+
+          :
           /* Humidity Graph */
             <div style={{ display: 'flex', justifyContent: 'center', fontSize: '12px'}}>
               <AreaChart width={500} height={200} data={dataHum}
@@ -457,8 +474,8 @@ function TemperaturePanel() {
                 {/* <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" /> */}
                 <Area type="monotone" dataKey="temp" unit={'%'} name='Humidity' stroke="lightblue" fillOpacity={1} fill="url(#temp)" />
               </AreaChart>
-            </div> 
-        
+            </div>
+
           }
         </div>
 
@@ -471,10 +488,10 @@ function TemperaturePanel() {
 
       </div>
 
-      
+
 
     </div>
-    
+
   )
 }
 
