@@ -27,9 +27,9 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/hub" element={
-          <PrivateRoute>
+          // <PrivateRoute>
           <HubPage />
-          </PrivateRoute>
+          // </PrivateRoute>
           } />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/" element={<LandingPage />} />

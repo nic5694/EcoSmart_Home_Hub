@@ -183,56 +183,64 @@ function TemperaturePanel() {
     loadTemperatureAndHumidity()
   }, []);
 
-  
-  const leftArrowFunction = async() =>{
-    if(currentGraph == "temp") {
-      
-      try {
-      const res = await axios.get(endpointBasedUrl + '...');
+  const leftArrowFunction = async () => {
+    // Get the date for one day before the current date
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() - 1);
 
-      }  catch (error) {
-        console.log(error);
+    // Ensure the calculated date is not before the current day
+    const calculatedDate = currentDate < new Date() ? new Date() : currentDate;
+
+    const day = calculatedDate.getDate().toString().padStart(2, '0');
+    const month = (calculatedDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = calculatedDate.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    let tempDate = formattedDate.concat("temp.txt");
+    let humDate = formattedDate.concat("hum.txt");
+    console.log("The temp date is: ", tempDate)
+    console.log("The hum date is: ", humDate)
+    try {
+      if (currentGraph === "temp") {
+        const res = await axios.get(endpointBasedUrl + 'dataHistory/temperature/' + tempDate);
+        setDataTemp(res.data);
+      } else {
+        const res = await axios.get(endpointBasedUrl + 'dataHistory/humidity/' + humDate);
+        setDataHum(res.data);
       }
-
-    } else {
-
-      try {
-        const res = await axios.get(endpointBasedUrl + '...');
-
-      }  catch (error) {
-        console.log(error);
-      }
-
+    } catch (error) {
+      console.log(error);
     }
-  }
-
-  const rightArrowFunction = async() =>{
+  };
 
 
-    if(currentGraph == "temp") {
-      
-      try {
-      const res = await axios.get(endpointBasedUrl + '...');
-      }  catch (error) {
-        console.log(error);
+  const rightArrowFunction = async () => {
+    // Get the date for one day after the current date
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 1);
+
+    // Ensure the calculated date is not after the current day
+    const calculatedDate = currentDate > new Date() ? new Date() : currentDate;
+
+    const day = calculatedDate.getDate().toString().padStart(2, '0');
+    const month = (calculatedDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = calculatedDate.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    let tempDate = formattedDate.concat("temp.txt");
+    let humDate = formattedDate.concat("hum.txt");
+    console.log("The temp date is: ", tempDate)
+    console.log("The hum date is: ", humDate)
+    try {
+      if (currentGraph === "temp") {
+        const res = await axios.get(endpointBasedUrl + 'dataHistory/temperature/' + tempDate);
+        setDataTemp(res.data);
+      } else {
+        const res = await axios.get(endpointBasedUrl + 'dataHistory/humidity/' + humDate);
+        setDataHum(res.data);
       }
-
-    } else {
-
-      try {
-        const res = await axios.get(endpointBasedUrl + '...');
-        }  catch (error) {
-          console.log(error);
-        }
-
+    } catch (error) {
+      console.log(error);
     }
-
-
-
-
-
-    
-  }
+  };
 
 
 
