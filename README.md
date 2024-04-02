@@ -20,8 +20,7 @@ The backend, powered by Flask, serves as the central system of the EcoSmart Home
 EcoSmart Home Hub represents a step towards sustainable and intelligent living, offering users a unified platform to effortlessly manage their home environment while promoting energy efficiency and convenience.
 
 ## Responses
-(ip address is variable for now working on getting a static ip)
-Endpoint: `http://192.168.1.137:5000/lights`
+Endpoint (varying on your local ip): `http://192.168.1.137:5000/lights`
 returns: 
 ```json
 {
